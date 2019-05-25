@@ -30,3 +30,9 @@ This app uses the following packages to read new replies and convert them to Tre
    the json configuration of the Google API user **in one line** (an example for creating one can be seen here: https://github.com/juampynr/google-spreadsheet-reader)
 
  Run `python3 main.py`
+ 
+ ##TODO
+ - [ ] exception handling
+ - [ ] logging
+ - [ ] notifications
+ - [ ] customization
