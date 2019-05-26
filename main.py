@@ -96,7 +96,7 @@ def main():
         # submit new ticket to trello
         try:
             # post the ticket
-            create_trello_task(client, user, topic, message)
+            create_trello_task(client, user=user, title=topic, message=message)
 
             # mark the ticket as submitted on the sheet
             form.update_acell(f'E{row_id}', 'submitted')
