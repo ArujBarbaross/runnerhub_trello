@@ -73,17 +73,21 @@ def main():
         token=env("TRELLO_TOKEN")
     )
 
-    # load the form (by default uses the first sheet
+    # load the form (by default uses the first sheet)
     form = get_google_form()
-    for row_id in range(2, form.row_count):
-        row = form.row_values(row_id)
+    rows = form.get_all_values()
+
+    for row_id, row in enumerate(rows):
+        # skip header row
+        if row_id == 0:
+            continue
 
         # stop the iteration if we reach an empty row
         if len(row) == 0:
             break
 
         # skip ill-formatted rows
-        if len(row) != 4 or len(row) == 5 and row[-1] != 'submitted':
+        if len(row) not in [4, 5] or (len(row) == 5 and row[-1] not in ['submitted', '']):
             continue
 
         # skip submitted rows
@@ -99,7 +103,7 @@ def main():
             create_trello_task(client, user=user, title=topic, message=message)
 
             # mark the ticket as submitted on the sheet
-            form.update_acell(f'E{row_id}', 'submitted')
+            form.update_acell(f'E{row_id+1}', 'submitted')
         except LookupError as err:
             print(err)
 
